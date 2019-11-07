@@ -102,7 +102,7 @@ export class DropdownSelectComponent implements OnInit, ControlValueAccessor, Va
     resetItem(event: any) {
         this.isActive = false;
         this.selectedItem = null;
-        this.searchTerm.setValue(  '');
+        this.searchTerm.setValue('');
 
         this.registerChange(null);
         this.onChange.emit(null);

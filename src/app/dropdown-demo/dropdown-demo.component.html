@@ -9,7 +9,8 @@
         </dropdown-select>
     </div>
 
-    <button class="btn btn-primary" type="submit" [disabled]="profileForm.invalid">Submit</button>
+    <button class="btn btn-primary" type="submit" [disabled]="profileForm.controls['selectedItem'].invalid">Submit
+    </button>
 </form>
 
 <pre *ngIf="selectedItem">

@@ -1,17 +1,19 @@
 <div class="input-group">
-    <input type="text" placeholder="Search..." [formControl]="searchTerm" name="searchTerm" #searchInput
-           [class.is-invalid]="searchTerm.invalid"
-           [class.is-valid]=" searchTerm.valid"
+    <input type="text" placeholder="Search..." [formControl]="searchTerm" name="searchTerm"
+           [class.is-invalid]="searchTerm.invalid && (searchTerm.touched || searchTerm.dirty)"
+           [class.is-valid]="searchTerm.valid"
+           #searchInput
            class="form-control">
     <div class="input-group-append">
         <span class="input-group-text"
-              [class.is-invalid]="searchTerm.invalid"
-              [class.is-valid]=" searchTerm.valid" *ngIf="selectedItem"
+              [class.is-invalid]="searchTerm.invalid  && (searchTerm.touched || searchTerm.dirty)"
+              [class.is-valid]="searchTerm.valid" *ngIf="selectedItem"
               (click)="resetItem($event)">
           <i class="far fa-times-circle"></i>
         </span>
-        <span class="input-group-text" [class.is-invalid]=" searchTerm.invalid"
-              [class.is-valid]=" searchTerm.valid" (click)="showItems($event)">
+        <span class="input-group-text"
+              [class.is-invalid]="searchTerm.invalid && (searchTerm.touched || searchTerm.dirty)"
+              [class.is-valid]="searchTerm.valid" (click)="showItems($event)">
           <i class="fas fa-caret-down"></i>
         </span>
     </div>
