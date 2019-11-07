@@ -1,23 +1,36 @@
 <div class="input-group">
-  <input type="text" placeholder="Search..." [formControl]="searchTerm" name="searchTerm" #searchInput
-         class="form-control">
-  <div class="input-group-append">
-    <span class="input-group-text" *ngIf="selectedItem" (click)="resetItem($event)">
-      <i class="far fa-times-circle"></i>
-    </span>
-    <span class="input-group-text" (click)="showItems($event)">
-      <i class="fas fa-caret-down"></i>
-    </span>
-  </div>
+    <input type="text" placeholder="Search..." [formControl]="searchTerm" name="searchTerm" #searchInput
+           [class.is-invalid]="isRequired && searchTerm.invalid"
+           [class.is-valid]="isRequired && searchTerm.valid"
+           class="form-control">
+    <div class="input-group-append" >
+        <span class="input-group-text"  [class.is-invalid]="isRequired && searchTerm.invalid"
+              [class.is-valid]="isRequired && searchTerm.valid" *ngIf="selectedItem" (click)="resetItem($event)">
+          <i class="far fa-times-circle"></i>
+        </span>
+        <span class="input-group-text"  [class.is-invalid]="isRequired && searchTerm.invalid"
+              [class.is-valid]="isRequired && searchTerm.valid" (click)="showItems($event)">
+          <i class="fas fa-caret-down"></i>
+        </span>
+    </div>
+    <div class="invalid-feedback" *ngIf="searchTerm.invalid && isRequired">
+        Please choose a language.
+    </div>
+    <div class="valid-feedback" *ngIf="searchTerm.valid && isRequired">
+        Looks good!
+    </div>
 </div>
 <div class="card" *ngIf="isActive">
-  <div class="card-body" *ngFor="let parentItem of filterItems">
-    <section *ngIf="parentItem[0].Mapped">
-      <h5 class="card-title">{{parentItem[0].Code}}</h5>
-      <ul class="list-group list-group-flush" *ngFor="let childItem of parentItem ">
-        <li class="list-group-item" [id]="'lang-'+childItem.Lcid" [class.selected]="selectedItem === childItem"
-            (click)="chooseItem(childItem)">{{childItem.Name}}</li>
-      </ul>
-    </section>
-  </div>
+    <div class="card-body" *ngFor="let parentItem of filterItems">
+        <section *ngIf="parentItem.options">
+            <h5 class="card-title">{{parentItem.name}}</h5>
+            <ul class="list-group list-group-flush" *ngFor="let childItem of parentItem.options">
+                <li class="list-group-item" [id]="'lang-option-'+childItem.Lcid"
+                    [class.selected]="selectedItem === childItem"
+                    (click)="chooseItem(childItem)">{{childItem.Name}} <strong
+                        *ngIf="childItem.Mapped">(mapped)</strong>
+                </li>
+            </ul>
+        </section>
+    </div>
 </div>

@@ -1,32 +1,49 @@
 import {Component, OnInit} from '@angular/core';
 import {Language} from '../language.model';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
-  selector: 'app-dropdown-demo',
-  templateUrl: './dropdown-demo.component.html',
-  styleUrls: ['./dropdown-demo.component.scss']
+    selector: 'app-dropdown-demo',
+    templateUrl: './dropdown-demo.component.html',
+    styleUrls: ['./dropdown-demo.component.scss']
 })
 export class DropdownDemoComponent implements OnInit {
 
-  items: Language[] = [];
+    items: Language[] = [];
+    selectedItem: Language;
+    profileForm: FormGroup;
 
-  constructor() {
-    let langs = [];
+    constructor() {
+        let langs = [];
 
-    for (let i = 0; i < 100; i++) {
-      langs.push(<Language> {
-        RightToLeft: false,
-        Code: 'Automation' + i % 10,
-        Lcid: i,
-        Mapped: i % 2 == 0,
-        Name: 'Automation' + i
-      });
+        for (let i = 0; i < 1000; i++) {
+            langs.push(<Language> {
+                RightToLeft: false,
+                Code: (i % 100 == 0) ? 'Automation' : 'Monitors',
+                Lcid: i,
+                Mapped: (i % 100 == 0) ? false : (i % 25 == 0),
+                Name: 'Option ' + i
+            });
+        }
+
+        this.items = langs;
     }
 
-    this.items = langs;
-  }
+    ngOnInit() {
+        this.profileForm = new FormGroup({
+            language: new FormControl('', Validators.required)
+        });
+    }
 
-  ngOnInit() {
-  }
+    onSubmit(event) {
+
+    }
+
+    onChange(event) {
+
+        this.selectedItem = event;
+
+        console.log('Selected item ', event);
+    }
 
 }
