@@ -10,7 +10,7 @@ import {
     AbstractControl, Validators
 } from '@angular/forms';
 import {from, fromEvent, of} from 'rxjs';
-import {debounceTime, distinctUntilChanged, groupBy, map, mergeMap, switchMap, toArray} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, filter, groupBy, map, mergeMap, switchMap, toArray} from 'rxjs/operators';
 import {DropdownGroup} from './dropdown-group';
 
 @Component({
@@ -46,12 +46,13 @@ export class DropdownSelectComponent implements OnInit, ControlValueAccessor, Va
     };
 
     private renderGroup(items: Language[]) {
+        this.groupItems = [];
 
         from(items).pipe(
             groupBy(a => a[this.groupBy]),
             mergeMap(g => g.pipe(toArray()))
         ).subscribe(value => {
-            this.filterItems.push(<DropdownGroup> {
+            this.groupItems.push(<DropdownGroup> {
                 name: value[0][this.groupBy],
                 options: value.slice(1)
             });
@@ -61,32 +62,31 @@ export class DropdownSelectComponent implements OnInit, ControlValueAccessor, Va
 
     selectedItem: Language;
     searchTerm: FormControl;
-    filterItems: DropdownGroup[] = [];
+    groupItems: DropdownGroup[];
+    filterItems: Language[];
     isActive: boolean;
 
     constructor(private eref: ElementRef) {
-        this.searchTerm = new FormControl();
     }
 
     ngOnInit() {
-        this.renderGroup(this.items);
-        this.searchTerm.setValue('');
-        if (this.isRequired) {
-            this.searchTerm = new FormControl('', Validators.required);
-        }
+
+        this.searchTerm = this.isRequired
+            ? new FormControl('', Validators.required)
+            : new FormControl();
 
         fromEvent(this.searchInput.nativeElement, 'input')
             .pipe(
                 map((e: any) => e.target.value),
                 debounceTime(100),
+                filter(res => res.length > 0),
                 distinctUntilChanged(),
-                switchMap(term => {
-                    return of(this.items.filter(option => option.Name.toLowerCase().indexOf(term.toLowerCase()) > -1));
-                }))
+                switchMap(term => of(this.items.filter(option => option.Name.toLowerCase().indexOf(term.toLowerCase().trim()) != -1))))
             .subscribe(list => {
-                this.isActive = list.length > 0;
 
-                this.renderGroup(list);
+                this.isActive = list.length > 0;
+                this.groupItems = [];
+                this.filterItems = list;
             });
 
         fromEvent(this.searchInput.nativeElement, 'focus')
@@ -103,13 +103,12 @@ export class DropdownSelectComponent implements OnInit, ControlValueAccessor, Va
         this.isActive = false;
         this.selectedItem = null;
         this.searchTerm.setValue('');
-
-        this.registerChange(null);
         this.onChange.emit(null);
     }
 
     showItems(event: any) {
         this.isActive = true;
+        this.renderGroup(this.items);
     }
 
     registerOnChange(fn: any): void {
@@ -136,8 +135,6 @@ export class DropdownSelectComponent implements OnInit, ControlValueAccessor, Va
         this.isActive = false;
         this.selectedItem = item;
         this.searchTerm.setValue(item ? item.Name : '');
-
-        this.registerChange(item);
         this.onChange.emit(item);
     }
 
@@ -145,8 +142,7 @@ export class DropdownSelectComponent implements OnInit, ControlValueAccessor, Va
         if (!this.eref.nativeElement.contains(event.target)) {
             this.isActive = false;
             this.searchTerm.setValue(this.selectedItem ? this.selectedItem.Name : '');
-
-            this.renderGroup(this.items);
+            this.onChange.emit(this.selectedItem);
         }
     }
 }

@@ -20,16 +20,30 @@
 </div>
 
 <div class="card" *ngIf="isActive">
-    <div class="card-body" *ngFor="let parentItem of filterItems">
-        <section *ngIf="parentItem.options">
-            <h5 class="card-title">{{parentItem.name}}</h5>
-            <ul class="list-group list-group-flush" *ngFor="let childItem of parentItem.options">
-                <li class="list-group-item" [id]="'lang-option-'+childItem.Lcid"
-                    [class.selected]="selectedItem === childItem"
-                    (click)="chooseItem(childItem)">{{childItem.Name}} <strong
-                        *ngIf="childItem.Mapped">(mapped)</strong>
-                </li>
-            </ul>
-        </section>
-    </div>
+
+    <section *ngIf="groupItems&&groupItems.length>0">
+        <div class="card-body" *ngFor="let parentItem of groupItems">
+            <section *ngIf="parentItem.options||parentItem.options.length>0">
+                <h5 class="card-title">{{parentItem.name}}</h5>
+                <ul class="list-group list-group-flush" *ngFor="let childItem of parentItem.options">
+                    <li class="list-group-item" [id]="'lang-option-'+childItem.Lcid"
+                        [class.selected]="selectedItem === childItem"
+                        (click)="chooseItem(childItem)">{{childItem.Name}} <strong
+                            *ngIf="childItem.Mapped">(mapped)</strong>
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </section>
+
+    <section *ngIf="filterItems&&filterItems.length>0">
+        <ul class="list-group list-group-flush" *ngFor="let resultItem of filterItems">
+            <li class="list-group-item" [id]="'lang-option-'+resultItem.Lcid"
+                [class.selected]="selectedItem === resultItem"
+                (click)="chooseItem(resultItem)">{{resultItem.Name}} <strong
+                    *ngIf="resultItem.Mapped">(mapped)</strong>
+            </li>
+        </ul>
+    </section>
+
 </div>
