@@ -1,0 +1,51 @@
+.form-control {
+  border-right: none;
+}
+
+.input-group-text {
+  background-color: white;
+  border-left: none;
+  cursor: pointer;
+}
+
+.list-group-item {
+  cursor: pointer;
+}
+
+.list-group-item:hover {
+  color: #007bff;
+}
+
+.list-group-item.selected {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.card {
+  overflow-y: auto;
+  max-height: 250px;
+  z-index: 1000000;
+}
+
+.card::-webkit-scrollbar {
+  width: .5em;
+}
+
+.card::-webkit-scrollbar-thumb {
+  background-color: #525252;
+  border-radius: 5px;
+}
+
+.card::-webkit-scrollbar-thumb:hover {
+  background-color: #007bff;
+}
+
+.card::-webkit-scrollbar-thumb:active {
+  background-color: #007bff;
+}
+
+.card::-webkit-scrollbar-track {
+  border: 0 solid #ececec;
+  border-radius: 0;
+  -webkit-box-shadow: 0 0 5px #ececec;
+}
