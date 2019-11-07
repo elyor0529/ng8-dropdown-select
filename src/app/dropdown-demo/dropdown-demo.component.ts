@@ -19,9 +19,9 @@ export class DropdownDemoComponent implements OnInit {
         for (let i = 0; i < 1000; i++) {
             langs.push(<Language> {
                 RightToLeft: false,
-                Code: (i % 100 == 0) ? 'Automation' : 'Monitors',
+                Code: (i % 200 == 0) ? 'Automation' : 'Monitors',
                 Lcid: i,
-                Mapped: (i % 100 == 0) ? false : (i % 25 == 0),
+                Mapped: (i % 200 == 0) ? false : (i % 25 == 0),
                 Name: 'Option ' + i
             });
         }
@@ -31,7 +31,7 @@ export class DropdownDemoComponent implements OnInit {
 
     ngOnInit() {
         this.profileForm = new FormGroup({
-            language: new FormControl('', Validators.required)
+            selectedItem: new FormControl('', Validators.required)
         });
     }
 

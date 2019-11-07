@@ -101,9 +101,11 @@ export class DropdownSelectComponent implements OnInit, ControlValueAccessor, Va
 
     resetItem(event: any) {
         this.isActive = false;
-        this.renderGroup(this.items);
         this.selectedItem = null;
-        this.searchTerm.reset();
+        this.searchTerm.setValue(  '');
+
+        this.registerChange(null);
+        this.onChange.emit(null);
     }
 
     showItems(event: any) {
@@ -118,7 +120,7 @@ export class DropdownSelectComponent implements OnInit, ControlValueAccessor, Va
     }
 
     validate(control: AbstractControl): ValidationErrors | null {
-        return this.selectedItem ? null : {required: true};
+        return this.selectedItem ? null : {required: this.isRequired};
     }
 
     writeValue(obj: any): void {
@@ -132,13 +134,12 @@ export class DropdownSelectComponent implements OnInit, ControlValueAccessor, Va
 
     chooseItem(item: Language) {
         this.isActive = false;
+        this.selectedItem = item;
+        this.searchTerm.setValue(item ? item.Name : '');
+
         this.registerChange(item);
         this.onChange.emit(item);
-        this.selectedItem = item;
-        this.searchTerm.setValue(item.Name);
-        this.renderGroup(this.items);
     }
-
 
     closeDropdown(event) {
         if (!this.eref.nativeElement.contains(event.target)) {

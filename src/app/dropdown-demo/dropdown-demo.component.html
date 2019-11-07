@@ -1,15 +1,17 @@
 <h1 class="mt-5">dropdown-select demo</h1>
 
 <form [formGroup]="profileForm" class="needs-validation" novalidate (ngSubmit)="onSubmit($event)">
+
     <div class="form-group">
         <label>Language:</label>
-        <dropdown-select #language [options]="items" [(ngModel)]="selectedItem" [group-by]="'Code'" [is-required]="true"
-                         (change)="onChange($event)" [formControlName]="'language'">
+        <dropdown-select [options]="items" [(ngModel)]="selectedItem" [group-by]="'Code'" [is-required]="true"
+                         (change)="onChange($event)" [formControlName]="'selectedItem'">
         </dropdown-select>
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">Submit</button>
+
+    <button class="btn btn-primary" type="submit" [disabled]="profileForm.invalid">Submit</button>
 </form>
 
-<pre>
+<pre *ngIf="selectedItem">
     {{selectedItem|json}}
 </pre>

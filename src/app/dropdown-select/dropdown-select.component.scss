@@ -10,10 +10,12 @@
 
 .input-group-append .input-group-text.is-invalid {
   border-color: #dc3545;
+  color: #dc3545;
 }
 
 .input-group-append .input-group-text.is-valid {
   border-color: #28a745;
+  color: #28a745;
 }
 
 .list-group-item {
@@ -32,9 +34,6 @@
 .card {
   overflow-y: auto;
   max-height: 250px;
-  //z-index: 100000;
-  //position: absolute;
-  //width: auto;
 }
 
 .card::-webkit-scrollbar {

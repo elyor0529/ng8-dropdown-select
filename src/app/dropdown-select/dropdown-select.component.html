@@ -1,25 +1,22 @@
 <div class="input-group">
     <input type="text" placeholder="Search..." [formControl]="searchTerm" name="searchTerm" #searchInput
-           [class.is-invalid]="isRequired && searchTerm.invalid"
-           [class.is-valid]="isRequired && searchTerm.valid"
+           [class.is-invalid]="searchTerm.invalid"
+           [class.is-valid]=" searchTerm.valid"
            class="form-control">
-    <div class="input-group-append" >
-        <span class="input-group-text"  [class.is-invalid]="isRequired && searchTerm.invalid"
-              [class.is-valid]="isRequired && searchTerm.valid" *ngIf="selectedItem" (click)="resetItem($event)">
+    <div class="input-group-append">
+        <span class="input-group-text"
+              [class.is-invalid]="searchTerm.invalid"
+              [class.is-valid]=" searchTerm.valid" *ngIf="selectedItem"
+              (click)="resetItem($event)">
           <i class="far fa-times-circle"></i>
         </span>
-        <span class="input-group-text"  [class.is-invalid]="isRequired && searchTerm.invalid"
-              [class.is-valid]="isRequired && searchTerm.valid" (click)="showItems($event)">
+        <span class="input-group-text" [class.is-invalid]=" searchTerm.invalid"
+              [class.is-valid]=" searchTerm.valid" (click)="showItems($event)">
           <i class="fas fa-caret-down"></i>
         </span>
     </div>
-    <div class="invalid-feedback" *ngIf="searchTerm.invalid && isRequired">
-        Please choose a language.
-    </div>
-    <div class="valid-feedback" *ngIf="searchTerm.valid && isRequired">
-        Looks good!
-    </div>
 </div>
+
 <div class="card" *ngIf="isActive">
     <div class="card-body" *ngFor="let parentItem of filterItems">
         <section *ngIf="parentItem.options">
