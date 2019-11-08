@@ -36,14 +36,10 @@ export class DropdownDemoComponent implements OnInit {
     }
 
     onSubmit(event) {
-
+        console.log(event);
     }
 
     onChange(event) {
-
-        if(!event){
-            return;
-        }
 
         this.selectedItem = event;
 
