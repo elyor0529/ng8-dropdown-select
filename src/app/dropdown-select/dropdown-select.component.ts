@@ -95,6 +95,19 @@ export class DropdownSelectComponent implements OnInit, ControlValueAccessor, Va
                 this.isActive = this.items.length > 0;
 
                 this.renderGroup(this.items);
+
+                if (this.selectedItem) {
+
+                    setTimeout((tagId) => {
+
+                        document.getElementById('lang-option-' + tagId).scrollIntoView({
+                            behavior: 'auto',
+                            block: 'center'
+                        });
+
+                    }, 50, this.selectedItem.Lcid);
+                }
+
             });
     }
 
