@@ -35,10 +35,10 @@ import {DropdownGroup} from './dropdown-group.model';
 })
 export class DropdownSelectComponent implements OnInit, ControlValueAccessor, Validator {
 
-    @Input('is-required') isRequired: boolean;
+    @Input('required') isRequired: boolean;
     @Input('options') items: Language[];
-    @Input('group-by') groupBy: string;
-    @Output('change') onChange = new EventEmitter();
+    @Input('group') groupBy: string;
+    @Output('onChange') onChange = new EventEmitter();
 
     @ViewChild('searchInput', {static: true}) searchInput: ElementRef;
 

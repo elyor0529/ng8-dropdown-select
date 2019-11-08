@@ -4,8 +4,8 @@
 
     <div class="form-group">
         <label>Language:</label>
-        <dropdown-select [options]="items" [(ngModel)]="selectedItem" [group-by]="'Code'" [is-required]="true"
-                         (change)="onChange($event)" [formControlName]="'selectedItem'">
+        <dropdown-select [options]="items" [(ngModel)]="selectedItem" [group]="'Code'" [required]="true"
+                         (onChange)="onChange($event)" [formControlName]="'selectedItem'">
         </dropdown-select>
     </div>
 
