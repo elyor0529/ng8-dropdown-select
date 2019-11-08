@@ -11,7 +11,7 @@ import {
 } from '@angular/forms';
 import {from, fromEvent, of} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, groupBy, map, mergeMap, switchMap, toArray} from 'rxjs/operators';
-import {DropdownGroup} from './dropdown-group';
+import {DropdownGroup} from './dropdown-group.model';
 
 @Component({
     selector: 'dropdown-select',
@@ -54,7 +54,7 @@ export class DropdownSelectComponent implements OnInit, ControlValueAccessor, Va
         ).subscribe(value => {
             this.groupItems.push(<DropdownGroup> {
                 name: value[0][this.groupBy],
-                options: value.slice(1)
+                options: value.slice(0)
             });
         });
 
@@ -63,7 +63,6 @@ export class DropdownSelectComponent implements OnInit, ControlValueAccessor, Va
     selectedItem: Language;
     searchTerm: FormControl;
     groupItems: DropdownGroup[];
-    filterItems: Language[];
     isActive: boolean;
 
     constructor(private eref: ElementRef) {
@@ -85,8 +84,8 @@ export class DropdownSelectComponent implements OnInit, ControlValueAccessor, Va
             .subscribe(list => {
 
                 this.isActive = list.length > 0;
-                this.groupItems = [];
-                this.filterItems = list;
+
+                this.renderGroup(list);
             });
 
         fromEvent(this.searchInput.nativeElement, 'focus')

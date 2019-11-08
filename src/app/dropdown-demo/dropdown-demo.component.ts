@@ -41,6 +41,10 @@ export class DropdownDemoComponent implements OnInit {
 
     onChange(event) {
 
+        if(!event){
+            return;
+        }
+
         this.selectedItem = event;
 
         console.log('Selected item ', event);
