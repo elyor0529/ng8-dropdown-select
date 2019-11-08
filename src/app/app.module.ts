@@ -8,19 +8,19 @@ import {DropdownSelectComponent} from './dropdown-select/dropdown-select.compone
 import {DropdownDemoComponent} from './dropdown-demo/dropdown-demo.component';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AppRoutingModule
-  ],
-  declarations: [
-    AppComponent,
-    DropdownSelectComponent,
-    DropdownDemoComponent
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    imports: [
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AppRoutingModule
+    ],
+    declarations: [
+        AppComponent,
+        DropdownSelectComponent,
+        DropdownDemoComponent
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

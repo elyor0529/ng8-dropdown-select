@@ -21,7 +21,7 @@
 
 <div class="card" *ngIf="isActive">
 
-    <div class="card-body" *ngFor="let parentItem of groupItems">
+    <div class="card-body" *ngFor="let parentItem of filterItems">
         <section *ngIf="parentItem.options||parentItem.options.length>0">
             <h5 class="card-title">{{parentItem.name}}</h5>
             <ul class="list-group list-group-flush" *ngFor="let childItem of parentItem.options">

@@ -46,23 +46,24 @@ export class DropdownSelectComponent implements OnInit, ControlValueAccessor, Va
     };
 
     private renderGroup(items: Language[]) {
-        this.groupItems = [];
 
-        from(items).pipe(
-            groupBy(a => a[this.groupBy]),
-            mergeMap(g => g.pipe(toArray()))
-        ).subscribe(value => {
-            this.groupItems.push(<DropdownGroup> {
-                name: value[0][this.groupBy],
-                options: value.slice(0)
-            });
-        });
+        const groups = Object.assign([], items).reduce((prev, curr) => {
+            if (!prev[curr[this.groupBy]]) {
+                prev[curr[this.groupBy]] = [curr];
+            } else {
+                prev[curr[this.groupBy]].push(curr);
+            }
+            return prev;
+        }, {});
 
+        this.filterItems = Object.keys(groups).map(key => ({
+            name: key, options: groups[key]
+        }));
     }
 
     selectedItem: Language;
     searchTerm: FormControl;
-    groupItems: DropdownGroup[];
+    filterItems: DropdownGroup[];
     isActive: boolean;
 
     constructor(private eref: ElementRef) {
@@ -140,7 +141,7 @@ export class DropdownSelectComponent implements OnInit, ControlValueAccessor, Va
         }
 
         this.selectedItem = obj;
-        this.searchTerm.setValue(obj['Name']);
+        this.searchTerm.setValue(obj ? obj['Name'] : '');
     }
 
     chooseItem(item: Language) {
